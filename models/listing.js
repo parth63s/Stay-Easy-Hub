@@ -9,8 +9,8 @@ const listeningSchema = new Schema({
     },
     description: String,
     image: {
-        type: String,
-        set : (v) => v === "" ? "default link" : v,
+        url: String, 
+        filename: String,
     },
     price: Number,
     location: String,
