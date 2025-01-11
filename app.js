@@ -3,7 +3,7 @@ if(process.env.Node_ENV != "Production") {
 }
 
 
-
+const Listing = require("./models/listing.js");
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose")
@@ -84,6 +84,13 @@ app.use((req, res, next) => {
     res.locals.error = req.flash("error");
     res.locals.currUser = req.user;
     next();
+})
+
+app.get("/sort/:ids", async (req, res) => {
+    const {ids} = req.params;
+    console.log(ids);
+    const allListings = await Listing.find(ids === "all" ? {} : {category: ids});
+    res.render("listing/index.ejs", { allListings , ids});
 })
 
 // app.get("/demouser", async (req, res) => {

@@ -4,50 +4,54 @@
 <body>
     
     <div id="filters">
-        <div class="filter">
+        <a class="filter <%= ids == 'all' ? 'line' : '' %>"  href="/sort/all">
+            <div><i class="fa-solid fa-fire"></i></div>
+            <p>All List</p>
+        </a>
+        <a class="filter trending <%= ids == 'trending' ? 'line' : '' %>"  href="/sort/trending">
             <div><i class="fa-solid fa-fire"></i></div>
             <p>Trending</p>
-        </div>
-        <div class="filter">
+        </a>
+        <a class="filter <%= ids === 'rooms' ? 'line' : '' %>" href="/sort/rooms">
             <div><i class="fa-solid fa-bed"></i></div>
             <p>Rooms</p>
-        </div>
-        <div class="filter">
+        </a>
+        <!-- <a class="filter <%= ids === 'iconic' ? 'line' : '' %>" href="/sort/iconic">
             <div><i class="fa-solid fa-mountain-city"></i></div>
             <p>Iconic Citiers</p>
-        </div>
-        <div class="filter">
+        </a> -->
+        <a class="filter <%= ids === 'moutains' ? 'line' : '' %>" href="/sort/moutains">
             <div><i class="fa-solid fa-mountain"></i></div>
             <p>Moutains</p>
-        </div>
-        <div class="filter">
+        </a>
+        <!-- <a class="filter <%= ids === 'castles' ? 'line' : '' %>" href="/sort/castles">
             <div><i class="fa-solid fa-fort-awesome"></i></div>
             <p>castles</p>
-        </div>
-        <div class="filter">
+        </a> -->
+        <a class="filter <%= ids === 'amazing' ? 'line' : '' %>" href="/sort/amazing">
             <div><i class="fa-solid fa-person-swimming"></i></i></div>
             <p>Amazing Pools</p>
-        </div>
-        <div class="filter">
+        </a>
+        <a class="filter <%= ids === 'comping' ? 'line' : '' %>" href="/sort/comping">
             <div><i class="fa-solid fa-campground"></i></div>
             <p>Comping</p>
-        </div>
-        <div class="filter">
+        </a>
+        <!-- <a class="filter <%= ids === 'farms' ? 'line' : '' %>" href="/sort/farms">
             <div><i class="fa-solid fa-cow"></i></div>
             <p>Farms</p>
-        </div>
-        <div class="filter">
+        </a> -->
+        <a class="filter  <%= ids === 'arctic' ? 'line' : '' %>" href="/sort/arctic">
             <div><i class="fa-regular fa-snowflake"></i></i></i></div>
             <p>Arctic</p>
-        </div>
-        <div class="filter">
+        </a>
+        <!-- <a class="filter <%= ids === 'Domes' ? 'line' : '' %>" href="/sort/Domes">
             <div><i class="fa-solid fa-igloo"></i></div>
             <p>Domes</p>
-        </div>
-        <div class="filter">
+        </a> -->
+        <a class="filter <%= ids === 'Boats' ? 'line' : '' %>" href="/sort/Boats">
             <div><i class="fa-solid fa-ship"></i></div>
             <p>Boats</p>
-        </div>
+        </a>
         
         <div class="tax-taggle">
             <div class="form-check-reverse form-switch">
