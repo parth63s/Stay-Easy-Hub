@@ -90,8 +90,15 @@ app.get("/sort/:ids", async (req, res) => {
     const {ids} = req.params;
     console.log(ids);
     const allListings = await Listing.find(ids === "all" ? {} : {category: ids});
-    res.render("listing/index.ejs", { allListings , ids});
+    res.render("listing/index.ejs", { allListings , ids, searchText:undefined});
 })
+
+// app.get("/listings?", (req, res) => {
+//     const {q} = req.params;
+//     console.log(q);
+// })
+
+// app.get("/listing")
 
 // app.get("/demouser", async (req, res) => {
 //     let fakeUser = new User({
@@ -103,6 +110,7 @@ app.get("/sort/:ids", async (req, res) => {
 //     res.send(regiteredUser);
 
 // })
+
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);

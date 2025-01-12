@@ -4,51 +4,52 @@
 <body>
     
     <div id="filters">
-        <a class="filter <%= ids == 'all' ? 'line' : '' %>"  href="/sort/all">
+    
+        <a class="filter <%= choice == 'all' ? 'line' : '' %>" href="/listings?c=all">
             <div><i class="fa-solid fa-fire"></i></div>
             <p>All List</p>
         </a>
-        <a class="filter trending <%= ids == 'trending' ? 'line' : '' %>"  href="/sort/trending">
+        <a class="filter trending <%= choice == 'trending' ? 'line' : '' %>"  href="/listings?c=trending">
             <div><i class="fa-solid fa-fire"></i></div>
             <p>Trending</p>
         </a>
-        <a class="filter <%= ids === 'rooms' ? 'line' : '' %>" href="/sort/rooms">
+        <a class="filter <%= choice === 'rooms' ? 'line' : '' %>"  href="/listings?c=rooms">
             <div><i class="fa-solid fa-bed"></i></div>
             <p>Rooms</p>
         </a>
-        <!-- <a class="filter <%= ids === 'iconic' ? 'line' : '' %>" href="/sort/iconic">
+        <!-- <a class="filter <%= choice === 'iconic' ? 'line' : '' %>" href="/sort/iconic">
             <div><i class="fa-solid fa-mountain-city"></i></div>
             <p>Iconic Citiers</p>
         </a> -->
-        <a class="filter <%= ids === 'moutains' ? 'line' : '' %>" href="/sort/moutains">
+        <a class="filter <%= choice === 'moutains' ? 'line' : '' %>"  href="/listings?c=moutains">
             <div><i class="fa-solid fa-mountain"></i></div>
             <p>Moutains</p>
         </a>
-        <!-- <a class="filter <%= ids === 'castles' ? 'line' : '' %>" href="/sort/castles">
+        <!-- <a class="filter <%= choice === 'castles' ? 'line' : '' %>" href="/sort/castles">
             <div><i class="fa-solid fa-fort-awesome"></i></div>
             <p>castles</p>
         </a> -->
-        <a class="filter <%= ids === 'amazing' ? 'line' : '' %>" href="/sort/amazing">
+        <a class="filter <%= choice === 'amazing' ? 'line' : '' %>"  href="/listings?c=amazing">
             <div><i class="fa-solid fa-person-swimming"></i></i></div>
             <p>Amazing Pools</p>
         </a>
-        <a class="filter <%= ids === 'comping' ? 'line' : '' %>" href="/sort/comping">
+        <a class="filter <%= choice === 'comping' ? 'line' : '' %>"  href="/listings?c=comping">
             <div><i class="fa-solid fa-campground"></i></div>
             <p>Comping</p>
         </a>
-        <!-- <a class="filter <%= ids === 'farms' ? 'line' : '' %>" href="/sort/farms">
+        <!-- <a class="filter <%= choice === 'farms' ? 'line' : '' %>" href="/sort/farms">
             <div><i class="fa-solid fa-cow"></i></div>
             <p>Farms</p>
         </a> -->
-        <a class="filter  <%= ids === 'arctic' ? 'line' : '' %>" href="/sort/arctic">
+        <a class="filter  <%= choice === 'arctic' ? 'line' : '' %>"  href="/listings?c=arctic">
             <div><i class="fa-regular fa-snowflake"></i></i></i></div>
             <p>Arctic</p>
         </a>
-        <!-- <a class="filter <%= ids === 'Domes' ? 'line' : '' %>" href="/sort/Domes">
+        <!-- <a class="filter <%= choice === 'Domes' ? 'line' : '' %>"  href="/listings?c=Domes">
             <div><i class="fa-solid fa-igloo"></i></div>
             <p>Domes</p>
         </a> -->
-        <a class="filter <%= ids === 'Boats' ? 'line' : '' %>" href="/sort/Boats">
+        <a class="filter <%= choice === 'Boats' ? 'line' : '' %>"  href="/listings?c=Boats">
             <div><i class="fa-solid fa-ship"></i></div>
             <p>Boats</p>
         </a>
@@ -62,6 +63,7 @@
     </div>
     <div class="row  row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
         <%for(let listing of allListings) {%>
+            <% if(searchText == undefined || listing.title.toLowerCase().includes(searchText.toLowerCase())) { %>
             <a href="/listings/<%=listing._id%>" class="listing-link">
                 <div class="card col listing-card">
                     <img src="<%=listing.image.url%>" class="card-img-top" alt="listing_image" style="height: 20rem;">
@@ -75,7 +77,7 @@
                     </div>
                 </div>
             </a>
-            
+            <%}%>
         <%}%>
     </div>
     

@@ -1,8 +1,11 @@
 const Listing = require("../models/listing");
 
 module.exports.index = async (req,res) => {
-    const allListings = await Listing.find({});
-    res.render("listing/index.ejs", {allListings, ids : {}});
+    const searchText = req.query.search;
+    const choice = req.query.c;
+    const allListings = await Listing.find(choice === "all" || choice === undefined ? {} : {category: choice});
+    console.log(req.query)
+    res.render("listing/index.ejs", {allListings, searchText, choice});
 }
 
 module.exports.renderNewForm = (req,res) =>{
