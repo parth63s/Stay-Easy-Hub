@@ -2,8 +2,14 @@ const Listing = require("../models/listing");
 
 module.exports.index = async (req,res) => {
     const searchText = req.query.search;
-    const choice = req.query.c;
-    const allListings = await Listing.find(choice === "all" || choice === undefined ? {} : {category: choice});
+    const choice = req.query.choice;
+    const allListings = await Listing.find(choice === "all" || choice === undefined ? {} : {category: choice})
+        .populate({
+            path: "reviews", 
+            populate: {
+                path: "author",
+            }
+        });
     console.log(req.query)
     res.render("listing/index.ejs", {allListings, searchText, choice});
 }

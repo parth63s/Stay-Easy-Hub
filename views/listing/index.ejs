@@ -4,24 +4,19 @@
 <body>
     
     <div id="filters">
-    
-        <a class="filter <%= choice == 'all' ? 'line' : '' %>" href="/listings?c=all">
-            <div><i class="fa-solid fa-fire"></i></div>
-            <p>All List</p>
-        </a>
-        <a class="filter trending <%= choice == 'trending' ? 'line' : '' %>"  href="/listings?c=trending">
+        <a class="filter trending <%= choice == 'trending' ? 'line' : '' %>"  href="/listings?choice=trending">
             <div><i class="fa-solid fa-fire"></i></div>
             <p>Trending</p>
         </a>
-        <a class="filter <%= choice === 'rooms' ? 'line' : '' %>"  href="/listings?c=rooms">
+        <a class="filter <%= choice === 'rooms' ? 'line' : '' %>"  href="/listings?choice=rooms">
             <div><i class="fa-solid fa-bed"></i></div>
             <p>Rooms</p>
         </a>
-        <!-- <a class="filter <%= choice === 'iconic' ? 'line' : '' %>" href="/sort/iconic">
+        <a class="filter <%= choice === 'iconic' ? 'line' : '' %>" href="/listings?choice=iconic">
             <div><i class="fa-solid fa-mountain-city"></i></div>
             <p>Iconic Citiers</p>
-        </a> -->
-        <a class="filter <%= choice === 'moutains' ? 'line' : '' %>"  href="/listings?c=moutains">
+        </a>
+        <a class="filter <%= choice === 'moutains' ? 'line' : '' %>"  href="/listings?choice=moutains">
             <div><i class="fa-solid fa-mountain"></i></div>
             <p>Moutains</p>
         </a>
@@ -29,11 +24,11 @@
             <div><i class="fa-solid fa-fort-awesome"></i></div>
             <p>castles</p>
         </a> -->
-        <a class="filter <%= choice === 'amazing' ? 'line' : '' %>"  href="/listings?c=amazing">
+        <a class="filter <%= choice === 'amazing' ? 'line' : '' %>"  href="/listings?choice=amazing">
             <div><i class="fa-solid fa-person-swimming"></i></i></div>
             <p>Amazing Pools</p>
         </a>
-        <a class="filter <%= choice === 'comping' ? 'line' : '' %>"  href="/listings?c=comping">
+        <a class="filter <%= choice === 'comping' ? 'line' : '' %>"  href="/listings?choice=comping">
             <div><i class="fa-solid fa-campground"></i></div>
             <p>Comping</p>
         </a>
@@ -41,38 +36,47 @@
             <div><i class="fa-solid fa-cow"></i></div>
             <p>Farms</p>
         </a> -->
-        <a class="filter  <%= choice === 'arctic' ? 'line' : '' %>"  href="/listings?c=arctic">
+        <a class="filter  <%= choice === 'arctic' ? 'line' : '' %>"  href="/listings?choice=arctic">
             <div><i class="fa-regular fa-snowflake"></i></i></i></div>
             <p>Arctic</p>
         </a>
-        <!-- <a class="filter <%= choice === 'Domes' ? 'line' : '' %>"  href="/listings?c=Domes">
+        <a class="filter <%= choice === 'Domes' ? 'line' : '' %>"  href="/listings?choice=Domes">
             <div><i class="fa-solid fa-igloo"></i></div>
             <p>Domes</p>
-        </a> -->
-        <a class="filter <%= choice === 'Boats' ? 'line' : '' %>"  href="/listings?c=Boats">
+        </a>
+        <a class="filter <%= choice === 'Boats' ? 'line' : '' %>"  href="/listings?choice=Boats">
             <div><i class="fa-solid fa-ship"></i></div>
             <p>Boats</p>
         </a>
         
         <div class="tax-taggle">
             <div class="form-check-reverse form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                <input class="form-check-input u" type="checkbox" role="switch" id="flexSwitchCheckDefault">
                 <label class="form-check-label" for="flexSwitchCheckDefault">Display total after taxes</label>
               </div>
         </div>
     </div>
+    <div class="middle-line"></div>
     <div class="row  row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
         <%for(let listing of allListings) {%>
             <% if(searchText == undefined || listing.title.toLowerCase().includes(searchText.toLowerCase())) { %>
             <a href="/listings/<%=listing._id%>" class="listing-link">
                 <div class="card col listing-card">
                     <img src="<%=listing.image.url%>" class="card-img-top" alt="listing_image" style="height: 20rem;">
-                    <div class="card-img-overlay"></div>
+                    <div class="card-img-overlay review-img">
+                        
+                    </div>
                     <div class="card-body">
                         <p class="card-text">
-                            <b><%= listing.title %></b> <br>
-                            <i class="non-tax-info">&#8377; <%= listing.price ? (listing.price).toLocaleString("en-IN") : "N/A" %></i>
-                            <i class="tax-info"> &#8377; <%= listing.price ? (listing.price + listing.price * 18 / 100).toLocaleString("en-IN") : "N/A" %></i>
+                            <div class="img-title">
+                                
+                                    <div><h6><%= listing.location %>, <%= listing.country%></h6></div> 
+                                    <div class="end <%= listing.reviews.length == 0 ? "d-none" : "" %>">
+                                        <h6><i class="fa-solid fa-star"></i> <%= listing.reviews.reduce((acc, obj) => acc + obj.rating, 0) / listing.reviews.length %></h6>
+                                    </div> <br>
+                            </div>
+                            <i class="non-tax-info"><b>&#8377; <%= listing.price ? (listing.price).toLocaleString("en-IN") : "N/A" %></b> Night</i> 
+                            <i class="tax-info"><b>&#8377; <%= listing.price ? (listing.price + listing.price * 18 / 100).toLocaleString("en-IN") : "N/A" %></b> Night</i>
                         </p>
                     </div>
                 </div>
