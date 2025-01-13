@@ -24,6 +24,7 @@ const ExpressError = require("./utils/ExpressError.js");
 const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
+const reserveRouter = require("./routes/reserve.js");
 
 const dbUrl = process.env.ATLASDB_URL;
 
@@ -87,13 +88,6 @@ app.use((req, res, next) => {
     next();
 })
 
-app.get("/sort/:ids", async (req, res) => {
-    const {ids} = req.params;
-    console.log(ids);
-    const allListings = await Listing.find(ids === "all" ? {} : {category: ids});
-    res.render("listing/index.ejs", { allListings , ids, searchText:undefined});
-})
-
 // app.get("/listings?", (req, res) => {
 //     const {q} = req.params;
 //     console.log(q);
@@ -113,70 +107,71 @@ app.get("/sort/:ids", async (req, res) => {
 // })
 
 
-app.get("/listings/:id/calculate", async (req, res) => {
-    let {id} = req.params;
-    const listing = await Listing.findById(id)
-        .populate({
-            path: "reviews", 
-            populate: {
-                path: "author",
-            }
-        });
-    res.render("listing/calculate.ejs", {listing});
-})
-app.post("/listings/:id/calculate", async (req, res) => {
-    let reserve = req.body.reserve;
-    let {id} = req.params;
-    const listing = await Listing.findById(id)
-        .populate({
-            path: "reviews", 
-            populate: {
-                path: "author",
-            }
-        });
-    console.log(reserve)
-    const startDate = new Date(reserve.startDate);
-    const endDate = new Date(reserve.endDate);
-    const timeDifference = endDate - startDate;
-    const nights = timeDifference / (1000 * 60 * 60 * 24);
-    if(nights < 1) {
-        req.flash("error", "Please Enter Right Date!");
-        return res.redirect(`/listings/${id}/calculate`);
-    }
-    res.render("listing/reserve.ejs", {listing, reserve, nights});
-})
+// app.get("/listings/:id/calculate", async (req, res) => {
+//     let {id} = req.params;
+//     const listing = await Listing.findById(id)
+//         .populate({
+//             path: "reviews", 
+//             populate: {
+//                 path: "author",
+//             }
+//         });
+//     res.render("listing/calculate.ejs", {listing});
+// })
+// app.post("/listings/:id/calculate", async (req, res) => {
+//     let reserve = req.body.reserve;
+//     let {id} = req.params;
+//     const listing = await Listing.findById(id)
+//         .populate({
+//             path: "reviews", 
+//             populate: {
+//                 path: "author",
+//             }
+//         });
+//     console.log(reserve)
+//     const startDate = new Date(reserve.startDate);
+//     const endDate = new Date(reserve.endDate);
+//     const timeDifference = endDate - startDate;
+//     const nights = timeDifference / (1000 * 60 * 60 * 24);
+//     if(nights < 1) {
+//         req.flash("error", "Please Enter Right Date!");
+//         return res.redirect(`/listings/${id}/calculate`);
+//     }
+//     res.render("listing/reserve.ejs", {listing, reserve, nights});
+// })
 
 
 
 
-app.post("/listings/:id/reserve", async (req, res) => {
-    let { id } = req.params;
+// app.post("/listings/:id/reserve", async (req, res) => {
+//     let { id } = req.params;
 
-    // Fetch the listing
-    const listing = await Listing.findById(id);
-    if (!listing) {
-        req.flash("error", "Listing you requested does not exist!");
-        return res.redirect("/listings");
-    }
+//     // Fetch the listing
+//     const listing = await Listing.findById(id);
+//     if (!listing) {
+//         req.flash("error", "Listing you requested does not exist!");
+//         return res.redirect("/listings");
+//     }
 
-    console.log("Request body:", req.body);
+//     console.log("Request body:", req.body);
 
-    // Create new booking
-    const newBooking = new Reserve(req.body.reserve);
-    newBooking.author = req.user._id;
+//     // Create new booking
+//     const newBooking = new Reserve(req.body.reserve);
+//     newBooking.author = req.user._id;
 
-    // Save booking and update listing
-    listing.booking.push(newBooking);
-    await newBooking.save();
-    await listing.save();
+//     // Save booking and update listing
+//     listing.booking.push(newBooking);
+//     await newBooking.save();
+//     await listing.save();
 
-    req.flash("success", "Booking is completed!");
-    res.redirect(`/listings/${listing._id}`);
-});
+//     req.flash("success", "Booking is completed!");
+//     res.redirect(`/listings/${listing._id}`);
+// });
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
+app.use("/listings/:id", reserveRouter);
 
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page Not Found!"));
