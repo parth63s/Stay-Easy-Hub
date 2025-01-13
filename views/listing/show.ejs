@@ -26,6 +26,8 @@
                 <button class="btn btn-dark offset-5">Delete</button>
             </form>
         </div>
+    <% } else {%>
+        <a href="/listings/<%= listing._id %>/calculate" class="btn btn-danger col-2">Booking</a>
     <% } %>
     
 

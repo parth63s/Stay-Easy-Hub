@@ -1,0 +1,73 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="row mt-2">
+    <div class="col-6 mt-2">
+        <br><br>
+        <h3 class="mb-5">Confirm and pay</h3>
+        <form method="post" action="/listings/<%= listing._id %>/reserve" novalidate class="needs-validation" >
+            <h5>Your trip</h5>
+            <div class="mb-3">
+                <lable for="startDate" class="form-label">Check In Date</lable>
+                <input  name="reserve[startDate]" value="<%= reserve.startDate %>" type="date" class="form-control" readonly>
+                <div class="valid-feedback">Tital looks good </div>
+            </div>
+
+            <div class="mb-3">
+                <lable for="endDate" class="form-label">Check Out Date</lable>
+                <input name="reserve[endDate]" value="<%= reserve.endDate %>" type="date" class="form-control" readonly>
+                <div class="valid-feedback">Tital looks good </div>
+            </div>
+            <button href="/listings/<%= listing._id %>/reserve" class="btn btn-dark reserve-btn mt-3">reserve</button>
+            <br><br>
+        </form>
+    </div>
+    <div class="col-1"></div>
+    <div class="col-5 mt-5 ml-3 reserve-right ">
+        <div class="row">
+            <div class="col-5">
+                <img src="<%=listing.image.url%>" class="card-img-top" alt="listing_image" style="height: 10rem;">
+            </div>
+            <div class="col mt-3">
+                <h6><%= listing.title %></h6>
+                <p><%= listing.location %>, <%= listing.country%></p>
+                <h6 class="<%= listing.reviews.length == 0 ? "d-none" : "" %>"><i class="fa-solid fa-star"></i> <%= listing.reviews.reduce((acc, obj) => acc + obj.rating, 0) / listing.reviews.length %> (<%= listing.reviews.length %> - Reviews)</h6>
+                <i class="non-tax-info"><b>&#8377; <%= listing.price ? (listing.price).toLocaleString("en-IN") : "N/A" %></b> Night</i> 
+            </div>
+        </div>
+        <div class="row mt-2">
+            <hr>
+            <h4>Price details</h4>
+            <div class="calculate-price mt-2">
+                <p>&#8377; <%= listing.price %> x <%= nights %> nights</p>
+                <p class="end">&#8377; <%= (listing.price * nights).toFixed(2) %></p>
+            </div>
+            <div class="calculate-price">
+                <p>Taxes</p>
+                <p class="end">&#8377; <%= (listing.price * nights * 0.18).toFixed(2) %></p>
+            </div>
+            <hr class="mt-2">
+            <div class="calculate-price">
+                <h5>Total (INR)</h5>
+                <h5 class="end">&#8377; <%= (listing.price * nights * 0.18+ listing.price * nights).toFixed(2) %></h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-6">
+        <a href="/listings/<%=listing._id%>" class="listing-link container">
+            <div class="card listing-card">
+                <div class="card-img-overlay review-img">
+                    
+                </div>
+                <div class="card-body">
+                    <p class="card-text">
+                        <div class="img-title">
+                            
+                                <div><h6></h6></div> 
+                        </div>
+                        <i class="tax-info"><b>&#8377; <%= listing.price ? (listing.price + listing.price * 18 / 100).toLocaleString("en-IN") : "N/A" %></b> Night</i>
+                    </p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>

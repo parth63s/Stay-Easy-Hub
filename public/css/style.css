@@ -192,3 +192,18 @@ body {
         display: none;
     }
 }
+
+.calculate-price {
+    display: flex;
+}
+
+.reserve-right {
+    border: 1px solid black;
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.calculate-btn, .reserve-btn {
+    background-color: #fe424d !important;
+    border: none !important;
+}

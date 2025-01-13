@@ -25,7 +25,11 @@ const listeningSchema = new Schema({
     owner: {
         type: Schema.Types.ObjectId,
         ref: "User",
-    }
+    },
+    booking : [{
+        type: Schema.Types.ObjectId,
+        ref: "reserve",
+    }],
 });
 
 listeningSchema.post("findOneAndDelete", async(listing) => {
