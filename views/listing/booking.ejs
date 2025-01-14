@@ -4,17 +4,22 @@
 <body>
     <div class="row  row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3 p-3">
         <%for(let reserve of listOfReserve) {%>
-            <div class="card  listing-card">
-                <img src="<%=reserve.listing.image.url%>" class="card-img-top" alt="listing_image" style="height: 20rem;">
-                <div class="card-img-overlay review-img">
-                    
+            <div>
+                <div class="card reserve-card">
+                    <img src="<%=reserve.listing.image.url%>" class="card-img-top" alt="listing_image" style="height: 20rem;">
+                    <div class="card-img-overlay review-img">
+                        
+                    </div>
+                    <div class="card-body card-line">
+                        <h6><b><%= reserve.listing.title %></b></h6>
+                        <p>Check In Date: <%= new Date(reserve.startDate).toLocaleDateString() %></p>
+                        <p>Check Out Date:  <%= new Date(reserve.endDate).toLocaleDateString() %></p>
+                        <p>Total Price: <b> &#8377; <%= reserve.nights * reserve.listing.price + reserve.nights * reserve.listing.price * 0.18 %></b></p>
+                    </div>
                 </div>
-                <div class="card-body card-line">
-                    <h6><b><%= reserve.listing.title %></b></h6>
-                    <p>Check In Date: <%= new Date(reserve.startDate).toLocaleDateString() %></p>
-                    <p>Check Out Date:  <%= new Date(reserve.endDate).toLocaleDateString() %></p>
-                    <p>Total Price: <b> &#8377; <%= reserve.nights * reserve.listing.price + reserve.nights * reserve.listing.price * 0.18 %></b></p>
-                </div>
+                <form method="post" action="/reserve/<%= reserve._id %>?_method=delete">
+                    <button class="btn btn-dark reserve-delete-btn" style="cursor: pointer;">Unreserve</button>
+                </form>
             </div>
         <%}%>
     </div>

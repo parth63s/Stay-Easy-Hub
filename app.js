@@ -99,19 +99,26 @@ app.use("/listings/:id", reserveRouter);
 
 app.get("/reserve", async (req, res) => {   
     const id = req.user._id;
-
     const listOfReserve = await Reserve.find({ author: id })
         .populate({
             path: "listing", // Populate the `listing` reference in the `Reserve` model
         });
-    if(listOfReserve.length == 0) {
+    if(listOfReserve.length === 0) {
         req.flash("error", "Book a Place!");
         res.redirect("/listings");
     } 
 
     res.render("./listing/booking.ejs", { listOfReserve });
-
 })
+
+app.delete("/reserve/:id", async (req,res) => {
+    let {id} = req.params;
+    await Reserve.findByIdAndDelete(id);
+
+    req.flash("success", "Reserve listing is Unreserve.");
+    res.redirect("/reserve");   
+})
+
 
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page Not Found!"));

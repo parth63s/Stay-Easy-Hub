@@ -1,8 +1,8 @@
 <% layout("/layouts/boilerplate") %>
 
-<div class="row mt-2">
-    <div class="col-6 mt-2">
-        <br><br>
+<div class="row mt-5">
+    <div class=" col-12 order-3 col-md-6 order-md-1">
+        <br>
         <h3 class="mb-5">Confirm and pay</h3>
         <form method="post" action="/listings/<%= listing._id %>/reserve" novalidate class="needs-validation" >
             <h5>Your trip</h5>
@@ -21,8 +21,8 @@
             <br><br>
         </form>
     </div>
-    <div class="col-1"></div>
-    <div class="col-5 mt-5 ml-3 reserve-right ">
+    <div class="col-md-1 order-2"></div>
+    <div class="reserve-right col-12 order-1 col-md-5 order-md-2 p-4 mb-3">
         <div class="row">
             <div class="col-5">
                 <img src="<%=listing.image.url%>" class="card-img-top" alt="listing_image" style="height: 10rem;">
@@ -51,23 +51,5 @@
                 <h5 class="end">&#8377; <%= (listing.price * nights * 0.18+ listing.price * nights).toFixed(2) %></h5>
             </div>
         </div>
-    </div>
-    <div class="col-6">
-        <a href="/listings/<%=listing._id%>" class="listing-link container">
-            <div class="card listing-card">
-                <div class="card-img-overlay review-img">
-                    
-                </div>
-                <div class="card-body">
-                    <p class="card-text">
-                        <div class="img-title">
-                            
-                                <div><h6></h6></div> 
-                        </div>
-                        <i class="tax-info"><b>&#8377; <%= listing.price ? (listing.price + listing.price * 18 / 100).toLocaleString("en-IN") : "N/A" %></b> Night</i>
-                    </p>
-                </div>
-            </div>
-        </a>
     </div>
 </div>
