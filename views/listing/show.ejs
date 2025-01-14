@@ -20,14 +20,14 @@
         <br>
     <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
         <div class="btns">
-            <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark col-1 edit-btn">Edit</a>
+            <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark col-3 col-md-1 edit-btn">Edit</a>
     
             <form method="post" action="/listings/<%=listing._id%>?_method=delete">
-                <button class="btn btn-dark offset-5">Delete</button>
+                <button class="btn btn-dark offset-5"> Delete </button>
             </form>
         </div>
     <% } else {%>
-        <a href="/listings/<%= listing._id %>/calculate" class="btn btn-danger col-2">Booking</a>
+        <a href="/listings/<%= listing._id %>/calculate" class="btn btn-danger col-4 col-md-2">Booking</a>
     <% } %>
     
 

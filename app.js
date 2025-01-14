@@ -25,6 +25,7 @@ const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 const reserveRouter = require("./routes/reserve.js");
+const showReserveRouter = require("./routes/showReserve.js");
 
 const dbUrl = process.env.ATLASDB_URL;
 
@@ -96,28 +97,8 @@ app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 app.use("/listings/:id", reserveRouter);
+app.use("/reserve", showReserveRouter);
 
-app.get("/reserve", async (req, res) => {   
-    const id = req.user._id;
-    const listOfReserve = await Reserve.find({ author: id })
-        .populate({
-            path: "listing", // Populate the `listing` reference in the `Reserve` model
-        });
-    if(listOfReserve.length === 0) {
-        req.flash("error", "Book a Place!");
-        res.redirect("/listings");
-    } 
-
-    res.render("./listing/booking.ejs", { listOfReserve });
-})
-
-app.delete("/reserve/:id", async (req,res) => {
-    let {id} = req.params;
-    await Reserve.findByIdAndDelete(id);
-
-    req.flash("success", "Reserve listing is Unreserve.");
-    res.redirect("/reserve");   
-})
 
 
 app.all("*", (req, res, next) => {

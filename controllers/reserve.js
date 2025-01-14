@@ -25,7 +25,6 @@ module.exports.calculatePrice = async (req, res) => {
                 path: "author",
             }
         });
-    console.log(reserve)
     const startDate = new Date(reserve.startDate);
     const endDate = new Date(reserve.endDate);
     const timeDifference = endDate - startDate;
@@ -47,8 +46,6 @@ module.exports.reserveListing = async (req, res) => {
         req.flash("error", "Listing you requested does not exist!");
         return res.redirect("/listings");
     }
-
-    console.log("Request body:", req.body);
 
     // Create new booking
     const newBooking = new Reserve(req.body.reserve);
