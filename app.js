@@ -88,90 +88,30 @@ app.use((req, res, next) => {
     next();
 })
 
-// app.get("/listings?", (req, res) => {
-//     const {q} = req.params;
-//     console.log(q);
-// })
-
-// app.get("/listing")
-
-// app.get("/demouser", async (req, res) => {
-//     let fakeUser = new User({
-//         email : "student@gamil.com",
-//         username: "delta"
-//     });
-    
-//     let regiteredUser = await User.register(fakeUser, "helloworld");
-//     res.send(regiteredUser);
-
-// })
-
-
-// app.get("/listings/:id/calculate", async (req, res) => {
-//     let {id} = req.params;
-//     const listing = await Listing.findById(id)
-//         .populate({
-//             path: "reviews", 
-//             populate: {
-//                 path: "author",
-//             }
-//         });
-//     res.render("listing/calculate.ejs", {listing});
-// })
-// app.post("/listings/:id/calculate", async (req, res) => {
-//     let reserve = req.body.reserve;
-//     let {id} = req.params;
-//     const listing = await Listing.findById(id)
-//         .populate({
-//             path: "reviews", 
-//             populate: {
-//                 path: "author",
-//             }
-//         });
-//     console.log(reserve)
-//     const startDate = new Date(reserve.startDate);
-//     const endDate = new Date(reserve.endDate);
-//     const timeDifference = endDate - startDate;
-//     const nights = timeDifference / (1000 * 60 * 60 * 24);
-//     if(nights < 1) {
-//         req.flash("error", "Please Enter Right Date!");
-//         return res.redirect(`/listings/${id}/calculate`);
-//     }
-//     res.render("listing/reserve.ejs", {listing, reserve, nights});
-// })
-
-
-
-
-// app.post("/listings/:id/reserve", async (req, res) => {
-//     let { id } = req.params;
-
-//     // Fetch the listing
-//     const listing = await Listing.findById(id);
-//     if (!listing) {
-//         req.flash("error", "Listing you requested does not exist!");
-//         return res.redirect("/listings");
-//     }
-
-//     console.log("Request body:", req.body);
-
-//     // Create new booking
-//     const newBooking = new Reserve(req.body.reserve);
-//     newBooking.author = req.user._id;
-
-//     // Save booking and update listing
-//     listing.booking.push(newBooking);
-//     await newBooking.save();
-//     await listing.save();
-
-//     req.flash("success", "Booking is completed!");
-//     res.redirect(`/listings/${listing._id}`);
-// });
+app.get("/", (req,res) => {
+    res.redirect("/listings");
+})
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
 app.use("/listings/:id", reserveRouter);
+
+app.get("/reserve", async (req, res) => {   
+    const id = req.user._id;
+
+    const listOfReserve = await Reserve.find({ author: id })
+        .populate({
+            path: "listing", // Populate the `listing` reference in the `Reserve` model
+        });
+    if(listOfReserve.length == 0) {
+        req.flash("error", "Book a Place!");
+        res.redirect("/listings");
+    } 
+
+    res.render("./listing/booking.ejs", { listOfReserve });
+
+})
 
 app.all("*", (req, res, next) => {
     next(new ExpressError(404, "Page Not Found!"));

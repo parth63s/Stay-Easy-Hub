@@ -53,7 +53,14 @@ module.exports.reserveListing = async (req, res) => {
     // Create new booking
     const newBooking = new Reserve(req.body.reserve);
     newBooking.author = req.user._id;
+    newBooking.listing = id
 
+    const startDate = new Date(newBooking.startDate);
+    const endDate = new Date(newBooking.endDate);
+    const timeDifference = endDate - startDate;
+    const nights = timeDifference / (1000 * 60 * 60 * 24);
+    newBooking.nights = nights;
+    
     // Save booking and update listing
     listing.booking.push(newBooking);
     await newBooking.save();
