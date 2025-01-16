@@ -2,7 +2,7 @@
   .search-btn {
     background-color: #fe424d;
     color: white; 
-    border-radius: 25px;
+    border-radius: 1rem;
     padding: 0 1rem 0 1rem;
   }
   .search-btn:hover {
@@ -15,7 +15,7 @@
   }
 
   .search-inp {
-    border-radius: 25px;
+    border-radius: 1rem;
     padding: 0.5rem 3rem 0.5rem 3rem;
     font-size: 1rem;
   }
@@ -38,15 +38,15 @@
           <form class="d-flex"  method="get" role="search">
             <input class="form-control me-2 search-inp" id="search" name="search" type="search" placeholder="Search destinations">
             <button class="btn search-btn" type="submit" id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i>Search</button>
-          </form>
+          </form> 
         </div>
         <% } %>
-        <div class="navbar-nav ms-auto ">
+        <div class="navbar-nav ms-auto">
           <% if(currUser) { %>
-            <a href="/reserve" style="color: black;"><i class="fa-solid fa-book booking-icon" style="font-size: 2rem;"></i></a>
+            <a class="nav-link" href="/reserve" >Show Booking</a>
+            <a class="nav-link" href="/listings/new">List your home</a>
           <% } %>
 
-          <a class="nav-link" href="/listings/new">Airbnb your home</a>
           <% if(!currUser) { %>
           <a class="nav-link" href="/signup"><b>Sign Up</b></a>
           <a class="nav-link" href="/login"><b>Log in</b></a>

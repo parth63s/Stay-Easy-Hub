@@ -18,6 +18,10 @@ body {
 .logo {
     display: flex;
 }
+.navbar .show {
+    margin-top: 1rem;
+    background-color:white !important;
+}
 
 .fa-compass {
     color: #fe424d;
