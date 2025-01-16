@@ -41,7 +41,10 @@ module.exports.reserveListing = async (req, res) => {
     let { id } = req.params;
 
     // Fetch the listing
-    const listing = await Listing.findById(id);
+    const listing = await Listing.findById(id)
+        .populate ({
+            path: "booking"
+        });
     if (!listing) {
         req.flash("error", "Listing you requested does not exist!");
         return res.redirect("/listings");
@@ -59,11 +62,25 @@ module.exports.reserveListing = async (req, res) => {
     newBooking.nights = nights;
     
     // Save booking and update listing
-    listing.booking.push(newBooking);
-    await newBooking.save();
-    await listing.save();
-
-    req.flash("success", "Booking is completed!");
-    res.redirect(`/listings/${listing._id}`);
+    function isOverlap(start1, end1, start2, end2) {
+        return start1 <= end2 && start2 <= end1;
+    }
+    let overlapFound = false;
+    for (const reserve of listing.booking) {
+        if (isOverlap(new Date(reserve.startDate),new Date(reserve.endDate), startDate, endDate)) {
+            overlapFound = true;
+            break; // Exit loop if overlap is found
+        }
+    }
+    if(overlapFound) {
+        req.flash("error", "Already Reserved!");
+        res.redirect(`/listings/${id}`);
+    } else {
+        listing.booking.push(newBooking);
+        await newBooking.save();
+        await listing.save();
+    
+        req.flash("success", "Booking is completed!");
+        res.redirect(`/listings/${listing._id}`);
+    }
 };
-

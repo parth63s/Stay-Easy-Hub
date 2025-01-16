@@ -28,7 +28,7 @@ const listeningSchema = new Schema({
     },
     booking : [{
         type: Schema.Types.ObjectId,
-        ref: "reserve",
+        ref: "Reserve",
     }],
 });
 

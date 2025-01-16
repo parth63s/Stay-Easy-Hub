@@ -17,4 +17,4 @@ const reserveSchema = new Schema({
 
 })
 
-module.exports = mongoose.model("Reverse", reserveSchema);
+module.exports = mongoose.model("Reserve", reserveSchema);
