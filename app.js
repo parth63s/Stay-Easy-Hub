@@ -1,4 +1,4 @@
-if(process.env.Node_ENV != "Production") {
+if(process.env.NODE_ENV != "Production") {
     require('dotenv').config();
 }
 
@@ -18,7 +18,7 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
 const Reserve = require("./models/reserve.js")
 
-
+    
 const ExpressError = require("./utils/ExpressError.js");
 
 const listingRouter = require("./routes/listing.js");
@@ -61,8 +61,8 @@ store.on("error", ()=> {
 const sessionOptions = {
     store,
     secret : process.env.SECRET,
-    resave : false,
-    saveUninitialized : true,
+    resave : false,              // modified without changes
+    saveUninitialized : true,     // not initialized also store
     cookie : {
         expires : Date.now() + 7 * 24 * 60 *60 * 1000,
         maxAge :  7 * 24 * 60 *60 * 1000,
@@ -75,12 +75,12 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 app.use(flash());
 
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.initialize());    //setup
+app.use(passport.session());      
 passport.use(new LocalStrategy(User.authenticate()));
 
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.serializeUser(User.serializeUser());      //store in session
+passport.deserializeUser(User.deserializeUser());   // remove in session
 
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");

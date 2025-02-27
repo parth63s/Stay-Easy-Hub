@@ -7,10 +7,10 @@ const reserveController = require("../controllers/showReserve.js")
 
 //show
 router.route("/")
-    .get(isLoggedIn, wrapAsync(reserveController.renderBookingForm));
+    .get(isLoggedIn, wrapAsync(reserveController.renderBookingForm));      //render Booking page 
 
 //delete
 router.route("/:id")
-    .delete(isLoggedIn, wrapAsync(reserveController.destroyBooking));
+    .delete(isLoggedIn, wrapAsync(reserveController.destroyBooking));       // destroy(delete) booking
     
 module.exports = router

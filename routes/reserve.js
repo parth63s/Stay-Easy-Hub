@@ -5,8 +5,8 @@ const { isLoggedIn} = require("../middleware.js");
 const reserveController = require("../controllers/reserve.js")
 
 router.route("/calculate")
-    .get(isLoggedIn, wrapAsync(reserveController.renderReserveForm))
-    .post(isLoggedIn, wrapAsync(reserveController.calculatePrice))
+    .get(isLoggedIn, wrapAsync(reserveController.renderReserveForm))  //render reserve page
+    .post(isLoggedIn, wrapAsync(reserveController.calculatePrice))    //calculate price
 
 router.route("/reserve")
     .post(isLoggedIn, wrapAsync(reserveController.reserveListing))

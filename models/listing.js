@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./review.js")
 
-const listeningSchema = new Schema({
+const listeningSchema = new Schema({       
     title: {
         type:String,
         required: true,
@@ -16,20 +16,22 @@ const listeningSchema = new Schema({
     location: String,
     country: String,
     category: String,
-    reviews: [
+    reviews: [                      // Store all reviews in listing
         {
             type: Schema.Types.ObjectId,
             ref: "Review",
         }
     ],
-    owner: {
-        type: Schema.Types.ObjectId,
+    owner: {                        // Store listing Owner
+        type: Schema.Types.ObjectId,   
         ref: "User",
     },
-    booking : [{
+    booking : [                     // Store listing Bookings
+        {                      
         type: Schema.Types.ObjectId,
         ref: "Reserve",
-    }],
+        }
+    ],
 });
 
 listeningSchema.post("findOneAndDelete", async(listing) => {
@@ -38,5 +40,5 @@ listeningSchema.post("findOneAndDelete", async(listing) => {
     }
 })
 
-const  Listing = mongoose.model("Listing", listeningSchema);
+const  Listing = mongoose.model("Listing", listeningSchema);        // create model
 module.exports = Listing;

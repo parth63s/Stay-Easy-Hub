@@ -10,22 +10,22 @@ const { storage } = require("../cloudConfig.js");
 const upload = multer({storage})
 
 router.route("/")
-    .get(wrapAsync(listingControler.index))
-    .post(isLoggedIn, 
+    .get(wrapAsync(listingControler.index))     //show All Listing
+    .post(isLoggedIn,                           //create listing
         upload.single('listing[image]'),
         validateListing, 
         wrapAsync(listingControler.createListing)
     );
     
 //new route
-router.get("/new", isLoggedIn, listingControler.renderNewForm);
+router.get("/new", isLoggedIn, listingControler.renderNewForm);     // render a new listing page
 
 router.route("/:id")
-    .get(wrapAsync(listingControler.showListing))
-    .put(isLoggedIn, isOwner, upload.single('listing[image]'), validateListing, wrapAsync(listingControler.updateListing))
-    .delete(isLoggedIn, isOwner,wrapAsync(listingControler.destroyListing));
+    .get(wrapAsync(listingControler.showListing))           //show Listing
+    .put(isLoggedIn, isOwner, upload.single('listing[image]'), validateListing, wrapAsync(listingControler.updateListing))      //edit Listing
+    .delete(isLoggedIn, isOwner,wrapAsync(listingControler.destroyListing));             // delete Listing
 
 // Edit Route
-router.get("/:id/edit",isLoggedIn,isOwner, wrapAsync(listingControler.renderEditForm));
+router.get("/:id/edit",isLoggedIn,isOwner, wrapAsync(listingControler.renderEditForm));     //  render edit form
 
 module.exports = router

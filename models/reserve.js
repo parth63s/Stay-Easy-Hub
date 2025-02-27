@@ -6,15 +6,15 @@ const reserveSchema = new Schema({
     startDate: Date,
     endDate: Date,
     nights : Number,
-    listing: {
+    listing: {                    // Store listing 
         type: Schema.Types.ObjectId,
         ref: "Listing"
     },
-    author: {
+    author: {                    // Store Owner
         type: Schema.Types.ObjectId,
         ref: "User",
     }
 
 })
 
-module.exports = mongoose.model("Reserve", reserveSchema);
+module.exports = mongoose.model("Reserve", reserveSchema);         // create model
