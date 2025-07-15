@@ -3,7 +3,7 @@ const initData = require("./data.js");
 const Listing = require("../models/listing.js");
 const User = require("../models/user.js");
 
-const MONGO_URL = "mongodb+srv://parthramani330:parthramani@parthramani.twtjs10.mongodb.net/TravelBookingSystem";
+const MONGO_URL = "mongodb+srv://bhaha2489:6yyEjTEsyp1twcQF@parthramani.arsaz.mongodb.net/StayEasyHub?retryWrites=true&w=majority&appName=parthramani";
 
 main().then(() => {
         console.log("Data was initialized");

@@ -75,12 +75,13 @@ module.exports.reserveListing = async (req, res) => {
     if(overlapFound) {
         req.flash("error", "Already Reserved!");
         res.redirect(`/listings/${id}`);
-    } else {
-        listing.booking.push(newBooking);
-        await newBooking.save();
-        await listing.save();
-    
-        req.flash("success", "Booking is completed!");
-        res.redirect(`/listings/${listing._id}`);
     }
+
+    listing.booking.push(newBooking);
+    await newBooking.save();
+    await listing.save();
+    
+    req.flash("success", "Booking is completed!");
+    res.redirect(`/listings/${listing._id}`);
+    
 };

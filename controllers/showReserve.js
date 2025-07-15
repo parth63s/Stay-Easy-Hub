@@ -10,7 +10,7 @@ module.exports.renderBookingForm = async (req, res) => {
         });
     if(listOfReserve.length === 0) {
         req.flash("error", "Book a Place!");
-        res.redirect("/listings");
+        return res.redirect("/listings");
     } 
 
     res.render("./listing/booking.ejs", { listOfReserve });
